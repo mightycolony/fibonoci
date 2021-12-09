@@ -1,0 +1,26 @@
+sudo: required
+
+language: node_js
+node_js: 16
+
+services:
+      -docker
+      
+
+before_install:
+     - docker build -t multi/fibo -f ./client/Dockerfile.dev ./client
+
+script:
+     - docker run -e CI=true -t multi/fibo npm test -- --coverage
+
+after_success:
+     - docker build -t karthikhari95/multi-client -f ./client/Dockerfile.dev ./client
+     - docker build -t karthikhari95/multi-worker -f ./worker/Dockerfile.dev ./worker
+     - docker build -t karthikhari95/multi-server -f ./server/Dockerfile.dev ./server
+     - docker build -t karthikhari95/multi-nginx -f ./nginx/Dockerfile.dev ./nginx
+       #to push image to docker hub need to login
+     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER"
+     - docker push  karthikhari95/multi-client
+     - docker push  karthikhari95/multi-worker
+     - docker push  karthikhari95/multi-server
+     - docker push  karthikhari95/multi-nginx
