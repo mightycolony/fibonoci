@@ -19,7 +19,7 @@ after_success:
      - docker build -t karthikhari95/multi-server -f ./server/Dockerfile.dev ./server
      - docker build -t karthikhari95/multi-nginx -f ./nginx/Dockerfile.dev ./nginx
        #to push image to docker hub need to login
-     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER"
+     - docker login --username "$DOCKER_USER" --password "$DOCKER_PASSWORD"
      - docker push  karthikhari95/multi-client
      - docker push  karthikhari95/multi-worker
      - docker push  karthikhari95/multi-server
