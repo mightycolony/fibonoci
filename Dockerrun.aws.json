@@ -2,26 +2,30 @@
 
 {
 	"AWSEBDockerrunVersion": 2,
-	"containerdefinitions": [
+	"containerDefinitions": [
 	{
 	   "name": "client",
 	   "image": "karthikhari95/multi-client",
            "hostname": "client",
-	   "essential": "false"
+	   "essential": "false",
+	   "memory": 128
 	
 	},
 	{
 	   "name": "worker",
    	   "image": "karthikhari95/multi-worker",
 	   "hostname": "worker",
-           "essential": "false"	   
+           "essential": "false",
+           "memory": 128	   
 	},
         
 	{
 	   "name": "server",
 	   "image": "karthikhari95/multi-server",
 	   "hostname": "apis",
-	   "essential": "false"
+	   "essential": "false",
+	   "memory": 128
+
 	},
 
 	{
@@ -35,7 +39,8 @@
 	       "containerPort": 80
 	     }
 	    ],
-           "links": ["server","client"]
+           "links": ["server","client"],
+	   "memory": 128
 
 	}
 
